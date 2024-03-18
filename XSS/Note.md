@@ -105,9 +105,8 @@ In the simplest case, it is possible to simply close the script tag that is encl
 
 XSS into a JavaScript string with single quote and backslash escaped
 
-</script><img src=1 onerror=alert(document.domain)>   
+</script>\<img src=1 onerror=alert(document.domain)>   
 user supplied data was sent into script 
-
 
 
 Breaking out of a JavaScript string

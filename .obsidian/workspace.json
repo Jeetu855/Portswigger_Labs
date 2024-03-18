@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Access Control/Note.md",
+                "file": "Writeups/Notes.md",
                 "mode": "source",
                 "source": false
               }
@@ -69,8 +69,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "db484a667443b1a4",
@@ -86,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Access Control/Note.md",
+                "file": "Writeups/Notes.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Access Control/Note.md",
+                "file": "Writeups/Notes.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -126,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Access Control/Note.md"
+                "file": "Writeups/Notes.md"
               }
             }
           }
@@ -149,20 +148,24 @@
   },
   "active": "6bc86de16f4a5b91",
   "lastOpenFiles": [
+    "Access Control/Note.md",
+    "Writeups/Notes.md",
+    "Writeups",
+    "Path Traversal/Note.md",
+    "Authentication/Note.md",
+    "Authentication",
+    "CSRF/Note.md",
+    "XSS/Note.md",
     "Access Control/Attachments/Pasted image 20240228235117.png",
     "Access Control/Attachments",
     "Business Logic Vulnerabilities/Note.md",
-    "Access Control/Note.md",
     "Access Control",
     "Business Logic Vulnerabilities/Attachments/Pasted image 20240226142447.png",
     "Business Logic Vulnerabilities/Attachments",
-    "Path Traversal/Note.md",
     "Business Logic Vulnerabilities",
     "Path Traversal/Attachments/Pasted image 20240226131726.png",
     "Path Traversal/Attachments",
     "Path Traversal",
-    "CSRF/Note.md",
-    "XSS/Note.md",
     "CSRF",
     "Welcome.md",
     "XSS"
