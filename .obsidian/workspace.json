@@ -69,7 +69,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "db484a667443b1a4",
@@ -148,8 +149,16 @@
   },
   "active": "6bc86de16f4a5b91",
   "lastOpenFiles": [
-    "Access Control/Note.md",
+    "$PASSWORD == $USER_INPUT.md",
     "Writeups/Notes.md",
+    "Notes/Notes.md",
+    "2024-03-20.md",
+    "Untitled 1.canvas",
+    "Untitled.canvas",
+    "Programs/HackerOne.md",
+    "Programs",
+    "Notes",
+    "Access Control/Note.md",
     "Writeups",
     "Path Traversal/Note.md",
     "Authentication/Note.md",
@@ -166,8 +175,6 @@
     "Path Traversal/Attachments/Pasted image 20240226131726.png",
     "Path Traversal/Attachments",
     "Path Traversal",
-    "CSRF",
-    "Welcome.md",
-    "XSS"
+    "Welcome.md"
   ]
 }
