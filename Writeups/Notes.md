@@ -396,3 +396,65 @@ site:<target.com> inurl:login
 ```
 
 POC of exploit : \https://youtu.be/DknJ1Z0J-HU
+
+
+---
+
+\https://hakluke.medium.com/haklukes-guide-to-amass-how-to-use-amass-more-effectively-for-bug-bounties-7c37570b83f7
+### Guide to Amass — How to Use Amass More Effectively for Bug Bounties
+
+Basic use
+
+```sh
+amass enum -d clicktheclapbutton50timesplz.com
+```
+
+example of yaml file containing API keys
+\https://github.com/owasp-amass/amass/blob/master/examples/datasources.yaml
+
+Now, when you use amass, specify the config file with the `-config` parameter, like this:
+
+```sh
+amass enum -d followhaklukeontwitter.com -config ./myconfigfile.yaml
+```
+
+- amass intel — Discover targets for enumerations
+- amass enum — Perform enumerations and network mapping
+- amass viz — Visualize enumeration results
+- amass track — Track differences between enumerations
+- amass db — Manipulate the Amass graph database
+
+```sh
+amass intel -org "Tesla"
+```
+
+```sh
+amass enum -d example.com -active -cidr 1.2.3.4/24,4.3.2.1/24 -asn 12345
+```
+
+Note that you will first need to get the CIDRs and ASNs associated with the organisation using the `intel` methods
+
+
+Every scan that you do with amass is automatically stored on the computer that you ran it on. Then, if you run the same scan again, amass will track any changes that have taken place since your last scan. The most obvious way to use this feature is to discover which subdomains have appeared since your last scan. For example, I ran `amass enum -d vimeo.com` back in June. It's now August, so I ran the same command again.
+
+Now I can run `amass track -d vimeo.com` and it will tell me anything that has changed within the last two months.
+
+```sh
+amass track -d vimeo.com
+```
+
+
+---
+
+\https://vijetareigns.medium.com/pii-disclosure-worth-750-758b72e7e8ca
+### PII Disclosure Worth $750
+
+\www.redacted.com and api.redacted.com are in scope. As usual, I started exploring the application and capturing every request in the proxy tool burp suite. redacted.com is the main domain but all the traffic routes through api.redacted.com.
+
+After exploring the application, I started reviewing all the requests and responses from the **api.redacted.com**. There is one endpoint `https://api.redacted.com/api/v2/help-recovery/gethelp/getHelpFlow` POST request to the endpoint with body `{"user_type":"customer","flow_type":"request","request_id":"XXXXX","group_key":"view_payment_summary_group","mode":"published"}` is used to fetch the payment summary of the booked service. During reviewing the response of the endpoint. I found that the personal contact details of the service provider in key `masked_number` are exposed in plain text.
+
+![](https://miro.medium.com/v2/resize:fit:875/1*CVB5OHgUxH4sZH9grsLctQ.png)
+
+You can see in the above image that you need `request_id` (which is the **booking id**) to fetch the contact details of the service provider here `request_id` is not brute forcible and there is a proper authorization check on the API endpoint.
+
+So, to increase the impact of the vulnerability I made 3–5 new COD bookings for the next day. The service provider for the upcoming booking is assigned within 30 min of creating a booking. I hit the vulnerable API endpoint `https://api.redacted.com/api/v2/help-recovery/gethelp/getHelpFlow` with a new `request_id` to fetch contact details of the service provider assigned to that specific booking and then I canceled the booking so that I don’t have to pay any cancellation charge.
