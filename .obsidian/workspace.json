@@ -147,11 +147,20 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "b6ae6a2ec45ddda7",
+  "active": "6bc86de16f4a5b91",
   "lastOpenFiles": [
-    "$PASSWORD == $USER_INPUT.md",
-    "Writeups/Notes.md",
     "Notes/Notes.md",
+    "Notes/Attachments/Pasted image 20240329194310.png",
+    "Notes/Attachments/Pasted image 20240329194207.png",
+    "Notes/Attachments/Pasted image 20240329175615.png",
+    "Notes/Attachments/Pasted image 20240329175302.png",
+    "Notes/Attachments/Pasted image 20240329174038.png",
+    "Notes/Attachments/Pasted image 20240329174029.png",
+    "Notes/Attachments",
+    "Writeups/Notes.md",
+    "Writeups/Attachments/Pasted image 20240325191229.png",
+    "Writeups/Attachments",
+    "$PASSWORD == $USER_INPUT.md",
     "2024-03-20.md",
     "Untitled 1.canvas",
     "Untitled.canvas",
@@ -173,8 +182,6 @@
     "Business Logic Vulnerabilities/Attachments",
     "Business Logic Vulnerabilities",
     "Path Traversal/Attachments/Pasted image 20240226131726.png",
-    "Path Traversal/Attachments",
-    "Path Traversal",
     "Welcome.md"
   ]
 }

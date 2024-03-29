@@ -458,3 +458,206 @@ After exploring the application, I started reviewing all the requests and respon
 You can see in the above image that you need `request_id` (which is the **booking id**) to fetch the contact details of the service provider here `request_id` is not brute forcible and there is a proper authorization check on the API endpoint.
 
 So, to increase the impact of the vulnerability I made 3–5 new COD bookings for the next day. The service provider for the upcoming booking is assigned within 30 min of creating a booking. I hit the vulnerable API endpoint `https://api.redacted.com/api/v2/help-recovery/gethelp/getHelpFlow` with a new `request_id` to fetch contact details of the service provider assigned to that specific booking and then I canceled the booking so that I don’t have to pay any cancellation charge.
+
+
+---
+
+\https://aryasec.medium.com/i-earned-1000-with-idors-vulnerability-to-pii-leaks-outside-the-platform-65b1cbcfa26e
+### IDOR’s vulnerability to PII leaks outside the platform.
+
+Initially I found IDOR but I further escalated and got a vulnerability where the data released is very sensitive data for users.
+
+Open the application on android. Visit the profile to change the data and before that I have connected a proxy on burpsuite to intercept the data that will be sent to the server.  
+to the server.
+
+When I saved the changes I checked the data that was sent  
+to the server using burpsuite and I see something striking in the request, and this is the response that the server displays by showing the identity of myself in my personal account, in the next step I will prove that this is really an IDOR vulnerability where I will modify other people’s paramater with endpoints
+
+```http
+POST /api/jsonws/invoke HTTP/2  
+Host: redacted.com  
+Authorization: Basic  
+***************21haWwuY29tOjRrdVAxblQ0ciUkI0AheTN5  
+Content-Type: application/json; charset=utf-8  
+Content-Length: 89  
+Accept-Encoding: gzip, deflate  
+User-Agent: okhttp/2.7.5  
+[  
+{  
+"\/***.***\/get-profile-****-by-user-id-v2":  
+{  
+"groupId":20143,  
+"userId":13936494 //other people's property  
+}  
+}  
+]
+```
+
+Leaking other peoples info
+
+---
+
+\https://medium.com/bugbountywriteup/authentication-bypass-part-05-what-to-do-after-choosing-a-target-31eddc38029c
+
+
+### Authentication Bypass
+
+##### 1. Bad Passwords:
+
+As you know most of websites have a set of rules for settings the password, For Example:
+
+![[Pasted image 20240325191229.png]]
+
+
+But some websites may not have these rules, or may have weak rules which allows the users to create weak passwords which can be guessed easily by the attacker, granting him or her unauthorized access to the application.
+
+Steps To Test:
+- Review the website for any description of the rules
+- If self-registration is possible, attempt to register to find out the rules.
+- If password change is possible attempt to change your password to various weak values
+
+##### 2. Verbose Error Message:
+
+A typical login form requires a username and a password. If the login fails one of them is of course incorrect, but if the application tells you which of them is incorrect through an error message, this can be exploited.
+
+
+---
+
+\https://medium.com/@m7arm4n/finding-the-hidden-function-led-to-a-300-idor-d37219c66d03
+### Finding the hidden function led to IDOR
+
+The story behind the attack is that the attacker can read the comments of the circle that the manager has removed him from. Quite interesting nah ?!
+
+So let’s get into the attack scenario :
+
+1. In the first step, we create two accounts, a manager and an attacker
+2. Then we login to our manager account and make some comments. It doesn’t matter what the comment is about; we keep doing it until we see the option to view more replies.
+3. **This is the key moment** → We can do it if we see the view more replies option because this is a hidden function that won’t be called unless the comments have reached a certain level.
+4. After we have done that we can now invite our dear attacker to the program and make sure that the attacker account can send and receive comments in the program.
+5. As for the attacker, we keep commenting with the attacker account until we reach the magical view more replies option in the attacker account too.
+6. After inviting the attacker and commenting on his account, if we  
+    capture the request in the burp we see the following request going to  
+    the server and we send it to the repeater too.
+7. After we invited the attacker and made a comment noe from the manager account we knocked the attacker out of the account and made sure that he had no access to the account and the commenting circle
+8. Now we head back to the repeater where we captured our request and  
+    hold it there and if we make that request again we can see that we are  
+    able to send and see comments again but we are kicked out of the  
+    account. bingo !!
+
+---
+\https://infosecwriteups.com/mrs-2-bypassing-premium-features-by-checking-premium-validation-parameters-f2e211fad160
+
+### Bypassing premium features by checking “premium validation” parameters
+
+However, I found a Business Logic vulnerability that allows users to use this feature even if they are not premium.
+
+Steps
+
+1- Go to redacted application and click the my assets button. \https://redacted.com/MyAssets  
+2-Click on the add Assets button and create a new item, complete the whole process. During this process, you will not be able to add a note to the Additionnals Information (Notes) field.
+
+3- When the asset creation process is completed, you will see a summary area like the one below. Since you’re not a premium user, you will not be able to intervene in this area.
+
+![](https://miro.medium.com/v2/resize:fit:875/1*fKnNVYQm4PhAHjx3h9Q1xQ.png)
+
+
+
+4- Now go back to the My Assets area and open Burp Suite (Intercept), click on the arrow sign to edit the item you created.
+5- You will see a request of the following type, view the response to the request and change the **premium:false** parameter to **premium:true**. Submit the request.
+
+![](https://miro.medium.com/v2/resize:fit:875/1*Du-PgSxlmQpjFzUgVUY7IA.png)
+
+
+6- Go back to the page and click on the edit button, you will now be able to directly change the Additionnals informations field. Click on the save button and you will see that you have added notes permanently, even if it is a premium feature.
+
+
+---
+
+\https://medium.com/bugbountywriteup/how-i-found-130-sub-domain-takeover-vulnerabilities-using-nuclei-39edf89d3c70
+
+### How I found 130+ Sub-domain Takeover vulnerabilities using Nuclei
+
+Example Taken google.com
+
+```sh
+subfinder -d google.com -o /path/to/google.txt
+```
+
+```sh
+nuclei -l path/to/subdomains.txt -t /home/parrot/nuclei-templates-main/takeovers/detect-all-takeovers.yaml
+```
+
+\https://www.youtube.com/watch?time_continue=2&v=kYFLSrE-0ik&embeds_widget_referrer=https%3A%2F%2Fmedium.com%2F&embeds_referring_euri=https%3A%2F%2Fcdn.embedly.com%2F&embeds_referring_origin=https%3A%2F%2Fcdn.embedly.com
+
+---
+
+\https://medium.com/@thebuckhacker/how-to-do-55-000-subdomain-takeover-in-a-blink-of-an-eye-a94954c3fc75
+### How to do 55.000+ Subdomain Takeover in a Blink of an Eye
+
+
+During a BugBounty Program or a Pen Testing activity, if you encounter one of the two following web pages, you can have a Subdomain Takeover.
+
+![](https://miro.medium.com/v2/resize:fit:875/1*s3t0fHnqFuzfhybIfqg0TQ.png)
+
+If you see this page you have a potential SubDomain Takeover
+
+![](https://miro.medium.com/v2/resize:fit:875/1*3Zo68HP4znV2MuLSBmnx8w.png)
+
+Another example of vulnerable page
+
+First of all you can do a Subdomain Takeover on Shopify with two types of DNS records:
+
+1. Mapping with application name (CNAMES pointing to myshopname.myshopify.com)
+2. Mapping with DNS (CNAMES pointing to shops.myshopify.com)
+
+Case #1 Mapping with application name
+In this example we setup a CNAME for shop.buckhacker.com pointing to buckhacker.shopify.com
+
+Now if the shop name buckhacker is not claimed on Shopify we could claim it and perform the Subdomain Takeover.
+
+How we can check if a shop name is claimed or not ?
+
+During the account registration phase you are forced to choose your shop name. If you go on this page you can easy figure out if the shop name is available:
+
+![](https://miro.medium.com/v2/resize:fit:650/1*jCVBwMfh3J9ZdcaSuNX7Lg.png)
+
+Example of not available shop name
+
+![](https://miro.medium.com/v2/resize:fit:719/1*dGUoanFEjZ3PBP7FyDlzHw.png)
+
+Example of available shop name
+
+If you take a look with Burp what is happening behind you can see a request to a rest API that can gives to you two types of responses:
+
+> #1 Unavailable ({“status”:”unavailable”,”message”:null,”host”:”buckhacker.myshopify.com”})
+> 
+> #2 Available ({“status”:”available”,”message”:null,”host”:”buckhacker2.myshopify.com”})
+
+At this point if we found that the shop name is available we need simply to connect it in the Shopify portal. Let’s take a look how to do it.
+
+Once you login in the shopify website go to the left menu on “Online Store” and then “Domains”:
+
+![](https://miro.medium.com/v2/resize:fit:281/1*E5vT9KlowK2ni-kyUYRaqQ.png)
+
+Domains Settings on the left menu
+
+Now click on “Connect existing domain”:
+
+![](https://miro.medium.com/v2/resize:fit:303/1*F3qzR1HdWTnjbj-F8sxQ-Q.png)
+
+In the next form write down the vulnerable domain:
+
+![](https://miro.medium.com/v2/resize:fit:875/1*y8dMBwFBqm_w2ShpFKdfVw.png)
+
+Click on “Next” and then “Verify Connection”
+
+![](https://miro.medium.com/v2/resize:fit:875/1*uKSyZiwoY2iVNqvMw6LuFQ.png)
+
+Now if you performed all steps correctly you will be redirected to the following page:
+
+![](https://miro.medium.com/v2/resize:fit:875/1*_VQYzjHFJkwQ3SORCJAi2g.png)
+
+If you reached this point you have successfully performed a subdomain takeover.
+
+---
+

@@ -156,3 +156,127 @@ Cookie is a medium to transport session ID
 Session ID randomly generated value
 Cookies can be modified by client and so servers store cookies as well
 
+---
+
+Nuclei : template based scanner
+best for cve hunting
+
+Run DELETE  on meeting request
+Nuclei usage
+How to run unsigned templates
+Naabu usage
+
+```sh
+naabu -host example.com
+```
+
+`-p` : set the port that should be scanned
+
+```sh
+naabu -host example.com -port 80
+```
+
+`-c` : general internal worker threads (default 25)
+
+```sh
+naabu -host example.com -c 10
+```
+
+`-rate` : packets to send per second (default 1000)
+
+```sh
+naabu -host example.com -rate 25
+```
+
+`-top-ports, -tp string`      top ports to scan (default 100) (full,100,1000)
+
+```sh
+naabu -host example.com -top-ports 200
+```
+
+`-list, -l string`            list of hosts to scan ports (file)
+
+```sh
+naabu -list example.txt -port 80,443
+```
+
+nuclei uses httpx again even after we have used again so we use `-nh`
+`nh, -no-httpx`                   disable httpx probing for non-url input
+
+AEM : Adobe Experience manager: lookout for this
+
+```sh
+nuclei -target example -t ~/nuclei_templates -tags panel, aem, adobe -es info -ept dns,tcp,ssl -markdown-export /nuclei_reports/nameOfReport
+```
+
+Run all the nuclei templates that contain these tags in their yaml file
+
+```shodan
+http.title:"aem sign in"
+```
+
+Get output in md
+
+```sh
+nuclei -target 10.10.181.110:8080 -t ~/nuclei-templates -tags apache
+```
+
+Output
+```sh
+[CVE-2021-41773:LFI] [http] [high] http://10.10.181.110:8080/cgi-bin/.%2e/.%2e/.%2e/.%2e/etc/passwd
+[apache-detect] [http] [info] http://10.10.181.110:8080 [Apache/2.4.49 (Unix)]
+```
+
+
+```sh
+nuclei -target 10.10.181.110:8080 -t ~/nuclei-templates -tags apache -es info
+```
+
+Output
+
+```sh
+[INF] Running httpx on input host
+[INF] Found 1 URL from httpx
+[INF] Templates clustered: 6 (Reduced 4 Requests)
+[INF] Using Interactsh Server: oast.online
+[CVE-2021-41773:LFI] [http] [high] http://10.10.181.110:8080/cgi-bin/.%2e/.%2e/.%2e/.%2e/etc/passwd
+```
+
+This time it excludes the informational data, also we can see it runs httpx by default which we can stop using the tag `-no-httpx`
+
+```sh
+nuclei -target 10.10.181.110:8081 -t ~/nuclei-templates -tags apache
+```
+
+![[Pasted image 20240329174029.png]]
+
+```sh
+nuclei -target 10.10.181.110:8081 -t ~/nuclei-templates -tags apache -es info
+```
+
+![[Pasted image 20240329175302.png]]
+
+```sh
+nuclei -target 10.10.181.110:8081 -t ~/nuclei-templates -tags apache,cve,traveral,rce,lfi,cve2021 -es info
+```
+
+![[Pasted image 20240329175615.png]]
+
+***Tags that we give are OR condition not AND since when we include more Tags we can see more number of templates being clustered for request and also it takes more time to complete the scan***
+
+```sh
+nuclei -target 10.10.255.110:8090 -t ~/nuclei-templates -tags confluence,cve,auth-bypass -es info -ept dns,tcp,ssl -markdown-export ~/nuclei_reports/
+```
+
+Output
+
+![[Pasted image 20240329194310.png]]
+
+```sh
+nuclei -target 10.10.255.110:8090 -t ~/nuclei-templates -tags confluence -es info -ept dns,tcp,ssl -markdown-export ~/nuclei_reports/
+```
+
+Output
+
+![[Pasted image 20240329194207.png]]
+
