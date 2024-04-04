@@ -661,3 +661,122 @@ If you reached this point you have successfully performed a subdomain takeover.
 
 ---
 
+\https://infosecwriteups.com/how-i-found-aws-api-keys-using-trufflehog-and-validated-them-using-enumerate-iam-tool-cd6ba7c86d09
+
+### How I Found AWS API Keys using “Trufflehog” and Validated them using “enumerate-iam” tool
+
+Reference:
+\https://www.hacker101.com/conferences/hacktivitycon2021/trufflehog.html
+\https://portswigger.net/daily-swig/meet-trufflehog-a-browser-extension-for-finding-secret-keys-in-javascript-code
+
+I opened a random target on my browser where this extension is installed.
+
+I got a Pop-up saying that this website contains AWS API keys as shown below.
+
+![](https://miro.medium.com/v2/resize:fit:578/1*X4UleJ-5aGek1ou9fGTKzQ.png)
+
+Most of the time, it will show the exposed key and the path where it is present.
+
+You can also copy the path and leaked key from the Pop-up box,
+
+So, I went to the path and searched for the leaked key where I found the AWS Access key and Secret key as shown below.
+
+It was a shock for me as most of the time both the keys won’t be present on a website in plain text and I was wondering how to use these keys as I am not aware of the process of how to use those keys.
+
+![](https://miro.medium.com/v2/resize:fit:875/1*SSw4k6q5rT_sb5jIUoq40g.png)
+
+So, I asked one of my friends who told me about this tool called “enumerate-iam” for testing the leaked API keys to validate them.
+
+I have provided the git link of the tool in the below section
+
+Link: \https://github.com/andresriancho/enumerate-iam
+
+Note: There is no guarantee that the Leaked keys will be Valid and give more info at all times. I was fortunate to get some basic info which is of no use to increase the impact on the target.
+
+But still, you can see that the exposed API keys are validated and gave some basic info about the AWS account as shown in the above picture.
+
+---
+\https://www.ceeyu.io/resources/blog/subdomain-enumeration-tools-and-techniques
+
+A subdomain is a second-level domain that is part of a larger domain. For example, \www.ceeyu.io would be a subdomain of ceeyu.io. In this case, "www" would be the subdomain, "ceeyu" would be the root domain, and "io" would be the top-level domain (TLD).
+
+Passive subdomain enumeration is performed by using publicly available data, such as search engine results, querying DNS records on DNS servers, and so on. This data is typically collected automatically, and no interaction is required with the target domain. Some of the passive DNS enumeration techniques we'll discuss here are:
+
+- Certificate Transparency
+- Google Dorking
+- DNS Aggregators
+- ASN Enumeration
+- Subject Alternate Name (SAN)
+
+Active subdomain enumeration is a method of identifying subdomains of a target domain by interacting with it directly. This is achieved by sending various types of requests, such as web requests and DNS queries, to the target domain. The data collected through these interactions is typically analyzed manually and can reveal hidden or otherwise unknown subdomains. Unlike passive subdomain enumeration, active subdomain enumeration requires direct interaction with the target domain and can be more time-consuming to perform. However, it can also yield more accurate and up-to-date results.
+
+- Brute Force Enumeration
+- Zone Transfer : A zone transfer is information about all existing name servers and domains for a given domain. This can be used to identify all existing subdomains for that domain. DNS zone transfer is commonly blocked on modern networks using firewall rules to filter DNS requests, so this method may not be effective in all cases. Additionally, some DNS servers will only perform a DNS zone transfer to authorized hosts, so it may be necessary to spoof the source IP address of the request in order to perform a successful transfer.
+- DNS Records
+- Content Security Policy (CSP) Header : The Content Security Policy (CSP) header is a security measure that can be used to restrict the sources from which a browser can load content. This includes JavaScript, CSS, HTML, and other types of files. If a CSP header is present on a website, it may be possible to enumerate subdomains by trying to load resources from those subdomains. For example, if you try to load a stylesheet from test.example.com and the CSP header is present, it will block the request and return an error. This can be used to identify subdomains that are accessible.
+
+CSP headers can be found in the HTTP response headers of a website. To view the headers for a given website, you can use a tool such as Google Chrome's Developer Tools or Firefox's Web Developer Tools.
+
+
+---
+
+\https://blog.stackademic.com/hunting-javascript-file-for-bug-hunters-e8b278a1306a
+
+### Hunting JavaScript File for Bug Hunters
+
+What We Are Looking in JavaScript:
+- New Endpoints and parameters
+- Sensitive Information (API key, authorization or tokens, leaked credentials, AWS and oauth secrets etc.)
+- Sometime hidden feature which application not using at that time
+- Hidden or internal portal/subdomains
+
+##### Extracting JavaScript File With Burp Suite:
+Make sure you set up your burp proxy and keep it running in background. Take a deep dive into your target, thoroughly examining all its features and endpoints. Once you’re done, head over to the proxy tab and configure the filters as shown below to capture all the JavaScript files. Don’t forget to copy all the results and save them in a file called “link.txt”.
+
+Command: wget -P jsfiles -i link.txt
+
+- wget command, which can retrieve files from the web using HTTP and FTP protocols.
+- -P option specify a different directory to save the files.
+- -i option, which specifies a file that contains a list of URLs to download.
+
+```sh
+wget -P jsfiles -i link.txt
+```
+
+Extracting JavaScript File With Tools:
+Required Tools — install these tools in your kali or system, you will get all repo and installation links below:
+
+Gau: \https://github.com/lc/gau
+Waybackurls: \https://github.com/tomnomnom/waybackurls
+Httpx: \https://github.com/projectdiscovery/httpx
+Subjs: \https://github.com/lc/subjs
+Nuclei: \https://github.com/projectdiscovery/nuclei
+
+here “target.txt” contain your target domains.
+
+```sh
+cat target.txt | gau | grep ".js" | tee js.txt  
+cat target.txt | waybackurls | grep ".js" | tee -a js.txt
+```
+
+This command reads the contents of the target.txt file, pipes it to the gau and waybackurls tool to extract URLs, pipes the output to grep to filter out only the URLs that contain .js, and finally pipes the output to tee to write the results to the js.txt file.
+
+```sh
+cat target.txt | subjs | httpx -mc 200 | tee -a js.txt
+```
+
+This command reads the contents of the target.txt file, pipes it to the subjs tool to extract JavaScript files, pipes the output to httpx to check the status code of each file, filters out only the files with a status code of 200, and finally pipes the output to tee to append the results to the js.txt file.
+
+```sh
+nuclei -l js.txt -t /root/nuclei-templates/http/exposures/ -o js_bugs.txt
+```
+
+This command uses the nuclei tool to scan the JavaScript files stored in the js.txt file for vulnerabilities using the templates located in the /root/nuclei-templates/http/exposures/ directory. The results of the scan are stored in a file named js_bugs.txt.
+
+As above method we got “js.txt” which contain all JavaScript file, there is one tool in GitHub, the tool name is “Mantra”. A tool used to hunt down API key leaks in JS files and pages
+
+```sh
+cat js.txt | Mantra
+```
+
+You can use Secret finder to find sensitive endpoints and keys. Secret Finder is a python script based on Link Finder, written to discover sensitive data like apikeys, accesstoken, authorizations, jwt, etc. in JavaScript files. It does so by using jsbeautifier for python in combination with a fairly large regular expression. The regular expressions consist of four small regular expressions. These are responsible for finding and search anything on js files.

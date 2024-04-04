@@ -280,3 +280,53 @@ Output
 
 ![[Pasted image 20240329194207.png]]
 
+---
+
+Reconftw
+Read about vulns in payloads all the things
+
+auto calibrate
+
+---
+
+CMS for hosting and server for hosting
+1. **CMS (Content Management System):**
+    
+    - A CMS is a software application or platform that enables users to create, manage, and modify digital content on a website without the need for specialized technical knowledge.
+    - Examples of popular CMS platforms include WordPress, Joomla, Drupal, and Shopify (for e-commerce).
+    - CMS platforms typically provide features such as content creation and editing, user management, themes/templates, plugins/extensions for additional functionality, and often include built-in SEO tools.
+    - Users interact with the CMS through a web-based interface, allowing them to add new pages, update existing content, manage media files, and more.
+2. **Server for Hosting:**
+    
+    - A server for hosting refers to the hardware and software infrastructure that stores and serves website content to users over the internet.
+    - This infrastructure typically consists of physical or virtual servers running web server software (e.g., Apache, Nginx) and other necessary components (such as databases, scripting languages, etc.).
+    - The server hosts the files and databases that make up the website, and it processes requests from users' web browsers to serve the appropriate content.
+    - Hosting providers offer various types of hosting services, including shared hosting, virtual private servers (VPS), dedicated servers, cloud hosting, etc., each offering different levels of performance, scalability, and control.
+
+In summary, a CMS is a software application used to manage website content, while a server for hosting refers to the infrastructure that stores and serves the website files and databases to users. They are complementary components of a website hosting environment, with the CMS providing the tools for content management, and the server hosting the website files and serving them to visitors.
+
+assetnote wordlists
+wordlists.assetnote.io
+assetnote.io for blogs
+trufflehog
+
+shushiwushi : for  google dorks for finding private BB programs
+Load config in burp : sets in scopes
+
+---
+
+RCE vs Command Injection
+
+When we get shell is RCE
+Path traversal leading to information disclosure
+Info disclosure : api keys , user info PII leak, source code, 
+JWT : Header Signture Payload
+
+---
+
+Web sites have photos videos of other sources and there might be tracking cookies so those things fill up our proxy
+
+site map -> right click -> add to scope 
+same thing in proxy  -> left click on filter settings and select -> show only in scope options
+
+to also get subdomains -> scope -> edit -> checkbox Include Subdomains

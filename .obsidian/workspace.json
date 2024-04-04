@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Writeups/Notes.md",
+                "file": "Access Control/Note.md",
                 "mode": "source",
                 "source": false
               }
@@ -69,8 +69,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "db484a667443b1a4",
@@ -86,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Writeups/Notes.md",
+                "file": "Access Control/Note.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Writeups/Notes.md",
+                "file": "Access Control/Note.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -126,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Writeups/Notes.md"
+                "file": "Access Control/Note.md"
               }
             }
           }
@@ -147,9 +146,14 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "6bc86de16f4a5b91",
+  "active": "b6ae6a2ec45ddda7",
   "lastOpenFiles": [
+    "JWT_Attacks",
     "Notes/Notes.md",
+    "InformationDisclosure/Note.md",
+    "Writeups/Notes.md",
+    "InformationDisclosure",
+    "CSRF/Note.md",
     "Notes/Attachments/Pasted image 20240329194310.png",
     "Notes/Attachments/Pasted image 20240329194207.png",
     "Notes/Attachments/Pasted image 20240329175615.png",
@@ -157,7 +161,6 @@
     "Notes/Attachments/Pasted image 20240329174038.png",
     "Notes/Attachments/Pasted image 20240329174029.png",
     "Notes/Attachments",
-    "Writeups/Notes.md",
     "Writeups/Attachments/Pasted image 20240325191229.png",
     "Writeups/Attachments",
     "$PASSWORD == $USER_INPUT.md",
@@ -172,7 +175,6 @@
     "Path Traversal/Note.md",
     "Authentication/Note.md",
     "Authentication",
-    "CSRF/Note.md",
     "XSS/Note.md",
     "Access Control/Attachments/Pasted image 20240228235117.png",
     "Access Control/Attachments",
@@ -180,7 +182,6 @@
     "Access Control",
     "Business Logic Vulnerabilities/Attachments/Pasted image 20240226142447.png",
     "Business Logic Vulnerabilities/Attachments",
-    "Business Logic Vulnerabilities",
     "Path Traversal/Attachments/Pasted image 20240226131726.png",
     "Welcome.md"
   ]
